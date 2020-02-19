@@ -1,0 +1,43 @@
+
+Euclidian
+
+ooog.
+o++..
+oi+..
+.o+..
++...+
+
+Path Cost: 8
+Number of Nodes: 4
+
+Manhattan
+
+ooog.
+o++o.
+oi+o.
+oo+o.
++ooo+
+
+Path Cost: 8
+Number of Nodes: 4
+
+A* Euclidian
+
+ooogo
+o++oo
+oi+oo
+oo+oo
++ooo+
+
+Path Cost: 10
+Number of Nodes: 2
+
+A* Manhattan
+
+ooogo
+o++oo
+oi+oo
+oo+oo
++ooo+
+
+Solution not found.
