@@ -11,9 +11,8 @@ Creates a board from an input file and prompts the user to choose a boundary mod
 */
 Simulator::Simulator(string b)
 {
-	board = new Board(b);
+	filename = b;
 	fringe = new DLL<Cell*>;
-	fringe->insert(0, board->getInitial());
 }
 
 /**
@@ -72,12 +71,22 @@ Simulates Game of Life until it has stabilized or surpasses 1000 generations
 */
 int Simulator::singleSearch(ofstream& out)
 {
+	board = new Board(filename);
+	board->getInitial()->setVisited();
+	while(!fringe->isEmpty())
+	{
+		fringe->removeFront();
+	}
+	fringe->insert(0, board->getInitial());
+
 	int path = 0;
+	int nodes = 1;
 	int dimension = board->getDimension();
 	int x = 0;
 	int y = 0;
 	int gx = board->getGoal()->getX();
 	int gy = board->getGoal()->getY();
+
 	while(!fringe->isEmpty())
 	{
 		Cell* c = fringe->removeFront();
@@ -85,23 +94,25 @@ int Simulator::singleSearch(ofstream& out)
 		{
 			board->outBoard(out);
 			out << "\nPath Cost: " << c->getPath() << endl;
-			out << "Number of Nodes: " << fringe->getSize() << endl;
+			out << "Number of Nodes: " << nodes << endl;
 			return 0;
 		}
 		x = c->getX();
 		y = c->getY();
+		path = c->getPath()+1;
 		if(!c->isInitial())
 		{
 			board->setO(x,y);
 		}
-		path = c->getPath()+1;
 		if(x-1 >= 0)
 		{
 			Cell* c2 = board->getCell(x-1,y);
 			if(!c2->hasObstacle() && !c2->isVisited())
 			{
 				fringe->insert(search->returnF(path,x-1,y,gx,gy), c2);
+				nodes++;
 				c2->setPath(path);
+				c2->setVisited();
 			}
 		}
 		if(y-1 >= 0)
@@ -110,7 +121,9 @@ int Simulator::singleSearch(ofstream& out)
 			if(!c2->hasObstacle() && !c2->isVisited())
 			{
 				fringe->insert(search->returnF(path,x,y-1,gx,gy), c2);
+				nodes++;
 				c2->setPath(path);
+				c2->setVisited();
 			}
 		}
 		if(x+1 < dimension)
@@ -119,7 +132,9 @@ int Simulator::singleSearch(ofstream& out)
 			if(!c2->hasObstacle() && !c2->isVisited())
 			{
 				fringe->insert(search->returnF(path,x+1,y,gx,gy), c2);
+				nodes++;
 				c2->setPath(path);
+				c2->setVisited();
 			}
 		}
 		if(y+1 < dimension)
@@ -128,7 +143,9 @@ int Simulator::singleSearch(ofstream& out)
 			if(!c2->hasObstacle() && !c2->isVisited())
 			{
 				fringe->insert(search->returnF(path,x,y+1,gx,gy), c2);
+				nodes++;
 				c2->setPath(path);
+				c2->setVisited();
 			}
 		}
 	}

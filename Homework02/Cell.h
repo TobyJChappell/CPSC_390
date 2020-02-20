@@ -30,6 +30,7 @@ public:
 	bool isGoal();
 	void setCharacter();
 	bool isVisited();
+	void setVisited();
 };
 
 #endif

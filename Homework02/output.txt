@@ -7,37 +7,38 @@ oi+..
 .o+..
 +...+
 
-Path Cost: 8
-Number of Nodes: 4
+Path Cost: 6
+Number of Nodes: 10
 
 Manhattan
 
 ooog.
-o++o.
-oi+o.
-oo+o.
-+ooo+
+o++..
+oi+..
+.o+..
++...+
 
-Path Cost: 8
-Number of Nodes: 4
+Path Cost: 6
+Number of Nodes: 10
 
 A* Euclidian
 
-ooogo
-o++oo
-oi+oo
-oo+oo
-+ooo+
+ooog.
+o++..
+oi+..
+.o+..
++...+
 
-Path Cost: 10
-Number of Nodes: 2
+Path Cost: 6
+Number of Nodes: 10
 
 A* Manhattan
 
-ooogo
-o++oo
-oi+oo
-oo+oo
-+ooo+
+ooog.
+o++..
+oi+..
+.o+..
++...+
 
-Solution not found.
+Path Cost: 6
+Number of Nodes: 10

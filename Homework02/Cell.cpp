@@ -82,10 +82,14 @@ bool Cell::isGoal()
 void Cell::setCharacter()
 {
 	character = 'o';
-	visited = true;
 }
 
 bool Cell::isVisited()
 {
 	return visited;
+}
+
+void Cell::setVisited()
+{
+	visited = true;
 }
