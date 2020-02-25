@@ -1,44 +1,64 @@
 
 Euclidian
 
-ooog.
-o++..
-oi+..
-.o+..
-+...+
+oooooooo+g
++o+o+ooo+o
++o+o+ooo+o
+oo+oo+oo+o
+o+++o+oo+o
+oo+oo+oo+o
++o+o+ooo+o
+oo+oo+oo+o
+i+++o++++o
+....oooooo
 
-Path Cost: 6
-Number of Nodes: 10
+Path Cost: 39
+Number of Nodes: 64
 
 Manhattan
 
-ooog.
-o++..
-oi+..
-.o+..
-+...+
+oooooooo+g
++o+o+ooo+o
++o+o+ooo+o
+oo+oo+oo+o
+o+++o+oo+o
+oo+oo+oo+o
++o+o+ooo+o
+oo+oo+oo+o
+i+++o++++o
+....oooooo
 
-Path Cost: 6
-Number of Nodes: 10
+Path Cost: 39
+Number of Nodes: 64
 
 A* Euclidian
 
-ooog.
-o++..
-oi+..
-.o+..
-+...+
+.ooooooo+g
++o+.+...+o
++o+.+...+o
+oo+.o+..+o
+o+++o+..+o
+oo+oo+..+o
++o+o+...+o
+oo+oo+..+o
+i+++o++++o
+oooooooooo
 
-Path Cost: 6
-Number of Nodes: 10
+Path Cost: 19
+Number of Nodes: 51
 
 A* Manhattan
 
-ooog.
-o++..
-oi+..
-.o+..
-+...+
+.ooooooo+g
++o+.+...+o
++o+.+...+o
+oo+..+..+o
+o+++.+..+o
+oo+..+..+o
++o+.+...+o
+oo+..+..+o
+i+++.++++o
+oooooooooo
 
-Path Cost: 6
-Number of Nodes: 10
+Path Cost: 19
+Number of Nodes: 43

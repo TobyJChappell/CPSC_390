@@ -1,13 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include "Simulator.h"
-#include "UserInput.h"
-
 using namespace std;
 
 int main(int argc, char** argv)
 {
-	UserInput u;
 	string file;
 	if(argc > 1)
 	{
@@ -18,7 +15,14 @@ int main(int argc, char** argv)
 		cout << "Please input a file:" << endl;
 		cin >> file;
 	}
-	u.checkPath(file);
+	ifstream test;
+	test.open(file);
+	while(!test)
+	{
+		cout << "Please enter a valid file file:" << endl;
+		cin >> file;
+		test.open(file);
+	}
 	Simulator s(file);
 	s.run();
 	return 0;

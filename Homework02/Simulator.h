@@ -17,9 +17,7 @@ using namespace std;
 class Simulator
 {
 private:
-	Board* board;
 	Search* search;
-	DLL<Cell*>* fringe;
 	string filename;
 public:
 	Simulator(string b);
@@ -27,7 +25,6 @@ public:
 	void chooseSearch(int c, ofstream& out);
 	int singleSearch(ofstream& out);
 	void run();
-	void checkNum(int& num);
 };
 
 #endif

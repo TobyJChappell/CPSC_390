@@ -6,7 +6,7 @@ using namespace std;
 
 /**
 Creates a board provided a valid filename
-@param b The filename (consists of a 2 numbers and a board)
+@param b The filename (consists of the size of the board followed by the board)
 */
 Board::Board(string b)
 {
@@ -35,23 +35,14 @@ Board::Board(string b)
 		}
 		else
 		{
+			board[i][j] = Cell(i,j,character);
 			if(character == 'i')
 			{
-				board[i][j] = Cell(i,j,character,false,true,false);
 				initial = &board[i][j];
 			}
 			else if(character == 'g')
 			{
-				board[i][j] = Cell(i,j,character,false,false,true);
 				goal = &board[i][j];
-			}
-			else if(character == '+')
-			{
-				board[i][j] = Cell(i,j,character,true,false,false);
-			}
-			else
-			{
-				board[i][j] = Cell(i,j,character);
 			}
 			j++;
 		}
@@ -83,22 +74,26 @@ int Board::getDimension()
 Returns the element of a board at a particular index
 @param i Row
 @param j Column
+@return Cell* The cell at a location
 */
 Cell* Board::getCell(int i, int j)
 {
 	return &board[i][j];
 }
 
-void Board::setO(int i, int j)
-{
-	board[i][j].setCharacter();
-}
-
+/**
+Returns the initial element of the board
+@return Cell* The initial cell
+*/
 Cell* Board::getInitial()
 {
 	return initial;
 }
 
+/**
+Returns the goal element of the board
+@return Cell* The goal cell
+*/
 Cell* Board::getGoal()
 {
 	return goal;
@@ -106,7 +101,7 @@ Cell* Board::getGoal()
 
 /**
 Appends the board to a file
-@param filename The name of a file
+@param file The file being appended to
 */
 void Board::outBoard(ofstream& file)
 {

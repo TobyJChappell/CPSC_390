@@ -3,6 +3,9 @@
 
 using namespace std;
 
+/**
+Default cell constructor
+*/
 Cell::Cell()
 {
 	x = 0;
@@ -15,81 +18,130 @@ Cell::Cell()
 	visited = false;
 }
 
+/**
+Overloaded cell constructor
+@param i X coordinate
+@param j Y coordinate
+@param c Character
+*/
 Cell::Cell(int i, int j, char c)
 {
 	x = i;
 	y = j;
-	path = 0;
 	character = c;
-	obstacle = false;
+	path = 0;
 	initial = false;
 	goal = false;
+	obstacle = false;
 	visited = false;
+	if(c == 'i')
+	{
+		initial = true;
+	}
+	else if(c == 'g')
+	{
+		goal = true;
+	}
+	else if(c == '+')
+	{
+		obstacle = true;
+	}
+
 }
 
-Cell::Cell(int i, int j, char c, bool obs, bool ini, bool g)
-{
-	x = i;
-	y = j;
-	path = 0;
-	obstacle = obs;
-	initial = ini;
-	goal = g;
-	character = c;
-	visited = false;
-}
-
+/**
+Returns x coordinate
+@return int X
+*/
 int Cell::getX()
 {
 	return x;
 }
 
+/**
+Returns y coordinate
+@return int Y
+*/
 int Cell::getY()
 {
 	return y;
 }
 
+/**
+Returns path cost
+@return int Path
+*/
 int Cell::getPath()
 {
 	return path;
 }
 
+/**
+Sets path cost to some value
+@param p Path cost
+*/
 void Cell::setPath(int p)
 {
 	path = p;
 }
 
+/**
+Returns the character
+@return char Character
+*/
 char Cell::getCharacter()
 {
 	return character;
 }
 
-bool Cell::hasObstacle()
+/**
+Returns cell is an obstacle
+@return bool Obstacle
+*/
+bool Cell::isObstacle()
 {
 	return obstacle;
 }
 
+/**
+Returns cell is the intial
+@return bool Initial
+*/
 bool Cell::isInitial()
 {
 	return initial;
 }
 
+/**
+Returns cell is the goal
+@return bool Goal
+*/
 bool Cell::isGoal()
 {
 	return goal;
 }
 
-void Cell::setCharacter()
-{
-	character = 'o';
-}
-
+/**
+Returns if is visited
+@return bool Visited
+*/
 bool Cell::isVisited()
 {
 	return visited;
 }
 
+/**
+Sets to visited
+*/
 void Cell::setVisited()
 {
 	visited = true;
+}
+
+/**
+Sets a cell to 'o'
+*/
+void Cell::setO()
+{
+	character = 'o';
 }

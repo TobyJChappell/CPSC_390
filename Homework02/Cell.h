@@ -12,25 +12,24 @@ private:
 	int y;
 	int path;
 	char character;
-	bool obstacle;
 	bool initial;
 	bool goal;
+	bool obstacle;
 	bool visited;
 public:
 	Cell();
 	Cell(int i, int j, char c);
-	Cell(int i, int j, char c, bool obs, bool ini, bool g);
 	int getX();
 	int getY();
 	int getPath();
 	void setPath(int p);
 	char getCharacter();
-	bool hasObstacle();
+	bool isObstacle();
 	bool isInitial();
 	bool isGoal();
-	void setCharacter();
 	bool isVisited();
 	void setVisited();
+	void setO();
 };
 
 #endif

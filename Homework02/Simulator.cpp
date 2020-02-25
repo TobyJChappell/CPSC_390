@@ -6,13 +6,12 @@
 using namespace std;
 
 /**
-Creates a board from an input file and prompts the user to choose a boundary mode and output
+Creates a board from an input file
 @param b The name of a valid input file
 */
 Simulator::Simulator(string b)
 {
 	filename = b;
-	fringe = new DLL<Cell*>;
 }
 
 /**
@@ -20,11 +19,12 @@ Destructor
 */
 Simulator::~Simulator()
 {
-	delete board;
 	delete search;
-	delete fringe;
 }
 
+/**
+Runs all four search algorithms and outputs it to a file
+*/
 void Simulator::run()
 {
 	ofstream out;
@@ -41,7 +41,9 @@ void Simulator::run()
 }
 
 /**
-Prompts the user to choose a search and assigns it to search
+Chooses a search algorithm and appends the search name to the file
+@param c Which search to choose
+@param out File being appended to
 */
 void Simulator::chooseSearch(int c, ofstream& out)
 {
@@ -67,32 +69,29 @@ void Simulator::chooseSearch(int c, ofstream& out)
 }
 
 /**
-Simulates Game of Life until it has stabilized or surpasses 1000 generations
+Performs a single search algorithm and appends resulting board, path cost, and number of nodes to output file
+@param out File being appended to
+@return int 0 if search was success
 */
 int Simulator::singleSearch(ofstream& out)
 {
-	board = new Board(filename);
-	board->getInitial()->setVisited();
-	while(!fringe->isEmpty())
-	{
-		fringe->removeFront();
-	}
-	fringe->insert(0, board->getInitial());
-
+	Board board(filename);
+	DLL<Cell*> fringe;
+	fringe.insert(0, board.getInitial());
 	int path = 0;
 	int nodes = 1;
-	int dimension = board->getDimension();
+	int dimension = board.getDimension();
 	int x = 0;
 	int y = 0;
-	int gx = board->getGoal()->getX();
-	int gy = board->getGoal()->getY();
+	int gx = board.getGoal()->getX();
+	int gy = board.getGoal()->getY();
 
-	while(!fringe->isEmpty())
+	while(!fringe.isEmpty())
 	{
-		Cell* c = fringe->removeFront();
-		if(c == board->getGoal())
+		Cell* c = fringe.removeFront();
+		if(c == board.getGoal())
 		{
-			board->outBoard(out);
+			board.outBoard(out);
 			out << "\nPath Cost: " << c->getPath() << endl;
 			out << "Number of Nodes: " << nodes << endl;
 			return 0;
@@ -102,14 +101,18 @@ int Simulator::singleSearch(ofstream& out)
 		path = c->getPath()+1;
 		if(!c->isInitial())
 		{
-			board->setO(x,y);
+			c->setO();
+		}
+		else
+		{
+			board.getInitial()->setVisited();
 		}
 		if(x-1 >= 0)
 		{
-			Cell* c2 = board->getCell(x-1,y);
-			if(!c2->hasObstacle() && !c2->isVisited())
+			Cell* c2 = board.getCell(x-1,y);
+			if(!c2->isObstacle() && !c2->isVisited())
 			{
-				fringe->insert(search->returnF(path,x-1,y,gx,gy), c2);
+				fringe.insert(search->returnF(path,x-1,y,gx,gy), c2);
 				nodes++;
 				c2->setPath(path);
 				c2->setVisited();
@@ -117,10 +120,10 @@ int Simulator::singleSearch(ofstream& out)
 		}
 		if(y-1 >= 0)
 		{
-			Cell* c2 = board->getCell(x,y-1);
-			if(!c2->hasObstacle() && !c2->isVisited())
+			Cell* c2 = board.getCell(x,y-1);
+			if(!c2->isObstacle() && !c2->isVisited())
 			{
-				fringe->insert(search->returnF(path,x,y-1,gx,gy), c2);
+				fringe.insert(search->returnF(path,x,y-1,gx,gy), c2);
 				nodes++;
 				c2->setPath(path);
 				c2->setVisited();
@@ -128,10 +131,10 @@ int Simulator::singleSearch(ofstream& out)
 		}
 		if(x+1 < dimension)
 		{
-			Cell* c2 = board->getCell(x+1,y);
-			if(!c2->hasObstacle() && !c2->isVisited())
+			Cell* c2 = board.getCell(x+1,y);
+			if(!c2->isObstacle() && !c2->isVisited())
 			{
-				fringe->insert(search->returnF(path,x+1,y,gx,gy), c2);
+				fringe.insert(search->returnF(path,x+1,y,gx,gy), c2);
 				nodes++;
 				c2->setPath(path);
 				c2->setVisited();
@@ -139,31 +142,16 @@ int Simulator::singleSearch(ofstream& out)
 		}
 		if(y+1 < dimension)
 		{
-			Cell* c2 = board->getCell(x,y+1);
-			if(!c2->hasObstacle() && !c2->isVisited())
+			Cell* c2 = board.getCell(x,y+1);
+			if(!c2->isObstacle() && !c2->isVisited())
 			{
-				fringe->insert(search->returnF(path,x,y+1,gx,gy), c2);
+				fringe.insert(search->returnF(path,x,y+1,gx,gy), c2);
 				nodes++;
 				c2->setPath(path);
 				c2->setVisited();
 			}
 		}
 	}
-	board->outBoard(out);
+	board.outBoard(out);
 	return -1;
-}
-
-/**
-Determines if parameter is a number as well as in the range specified. If not, asks user for a number until one is inputted.
-@param num Variable being checked
-*/
-void Simulator::checkNum(int& num)
-{
-	while(!cin || num < 1 || num > 4)
-	{
-		cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
-		cout << "Please enter a valid number:" << endl;
-		cin >> num;
-	}
 }

@@ -5,7 +5,7 @@
 using namespace std;
 
 /**
-The euclidian distance from the current node to the goal node
+The manhattan distance from the current node to the goal node
 @param i1 current node row
 @param j1 current node column
 @param i2 goal node row
