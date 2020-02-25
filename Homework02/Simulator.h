@@ -25,6 +25,8 @@ public:
 	void chooseSearch(int c, ofstream& out);
 	int singleSearch(ofstream& out);
 	void run();
+	int searchNeighbors(Cell* c, Board* board, DLL<Cell*>* fringe);
+	void outPath(Board* board);
 };
 
 #endif

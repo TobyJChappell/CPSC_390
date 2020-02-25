@@ -1,14 +1,14 @@
 
 Euclidian
 
-oooooooo+g
-+o+o+ooo+o
-+o+o+ooo+o
-oo+oo+oo+o
-o+++o+oo+o
-oo+oo+oo+o
-+o+o+ooo+o
-oo+oo+oo+o
+.ooo....+g
++o+o+...+o
++o+o+...+o
+oo+oo+..+o
+o+++o+..+o
+oo+oo+..+o
++o+o+...+o
+oo+oo+..+o
 i+++o++++o
 ....oooooo
 
@@ -17,14 +17,14 @@ Number of Nodes: 64
 
 Manhattan
 
-oooooooo+g
-+o+o+ooo+o
-+o+o+ooo+o
-oo+oo+oo+o
-o+++o+oo+o
-oo+oo+oo+o
-+o+o+ooo+o
-oo+oo+oo+o
+.ooo....+g
++o+o+...+o
++o+o+...+o
+oo+oo+..+o
+o+++o+..+o
+oo+oo+..+o
++o+o+...+o
+oo+oo+..+o
 i+++o++++o
 ....oooooo
 
@@ -33,15 +33,15 @@ Number of Nodes: 64
 
 A* Euclidian
 
-.ooooooo+g
-+o+.+...+o
-+o+.+...+o
-oo+.o+..+o
-o+++o+..+o
-oo+oo+..+o
-+o+o+...+o
-oo+oo+..+o
-i+++o++++o
+........+g
++.+.+...+o
++.+.+...+o
+..+..+..+o
+.+++.+..+o
+..+..+..+o
++.+.+...+o
+..+..+..+o
+i+++.++++o
 oooooooooo
 
 Path Cost: 19
@@ -49,14 +49,14 @@ Number of Nodes: 51
 
 A* Manhattan
 
-.ooooooo+g
-+o+.+...+o
-+o+.+...+o
-oo+..+..+o
-o+++.+..+o
-oo+..+..+o
-+o+.+...+o
-oo+..+..+o
+........+g
++.+.+...+o
++.+.+...+o
+..+..+..+o
+.+++.+..+o
+..+..+..+o
++.+.+...+o
+..+..+..+o
 i+++.++++o
 oooooooooo
 

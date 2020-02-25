@@ -1,8 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include <unistd.h>
-
 #include "Simulator.h"
+
 using namespace std;
 
 /**
@@ -78,80 +77,137 @@ int Simulator::singleSearch(ofstream& out)
 	Board board(filename);
 	DLL<Cell*> fringe;
 	fringe.insert(0, board.getInitial());
-	int path = 0;
+	board.getInitial()->setVisited();
 	int nodes = 1;
-	int dimension = board.getDimension();
-	int x = 0;
-	int y = 0;
-	int gx = board.getGoal()->getX();
-	int gy = board.getGoal()->getY();
-
 	while(!fringe.isEmpty())
 	{
 		Cell* c = fringe.removeFront();
 		if(c == board.getGoal())
 		{
+			outPath(&board);
 			board.outBoard(out);
 			out << "\nPath Cost: " << c->getPath() << endl;
 			out << "Number of Nodes: " << nodes << endl;
 			return 0;
 		}
+		nodes += searchNeighbors(c, &board, &fringe);
+	}
+	board.outBoard(out);
+	return -1;
+}
+
+/**
+Searches the neighbors of a cell
+@param c Current cell
+@param board Board
+@param fringe Fringe
+@return nodes Number of nodes searched
+*/
+int Simulator::searchNeighbors(Cell* c, Board* board, DLL<Cell*>* fringe)
+{
+	int x = c->getX();
+	int y = c->getY();
+	int gx = board->getGoal()->getX();
+	int gy = board->getGoal()->getY();
+	int path = c->getPath()+1;
+	int dimension = board->getDimension();
+	int nodes = 0;
+	if(x-1 >= 0)
+	{
+		Cell* c2 = board->getCell(x-1,y);
+		if(!c2->isObstacle() && !c2->isVisited())
+		{
+			fringe->insert(search->returnF(path,x-1,y,gx,gy), c2);
+			nodes++;
+			c2->setPath(path);
+			c2->setVisited();
+		}
+	}
+	if(y-1 >= 0)
+	{
+		Cell* c2 = board->getCell(x,y-1);
+		if(!c2->isObstacle() && !c2->isVisited())
+		{
+			fringe->insert(search->returnF(path,x,y-1,gx,gy), c2);
+			nodes++;
+			c2->setPath(path);
+			c2->setVisited();
+		}
+	}
+	if(x+1 < dimension)
+	{
+		Cell* c2 = board->getCell(x+1,y);
+		if(!c2->isObstacle() && !c2->isVisited())
+		{
+			fringe->insert(search->returnF(path,x+1,y,gx,gy), c2);
+			nodes++;
+			c2->setPath(path);
+			c2->setVisited();
+		}
+	}
+	if(y+1 < dimension)
+	{
+		Cell* c2 = board->getCell(x,y+1);
+		if(!c2->isObstacle() && !c2->isVisited())
+		{
+			fringe->insert(search->returnF(path,x,y+1,gx,gy), c2);
+			nodes++;
+			c2->setPath(path);
+			c2->setVisited();
+		}
+	}
+	return nodes;
+}
+
+/**
+Prints the path taken to get to the goal node
+@param board Pointer to board
+*/
+void Simulator::outPath(Board* board)
+{
+	int x = 0;
+	int y = 0;
+	int dimension = board->getDimension();
+	Cell* c = board->getGoal();
+	while(c != board->getInitial())
+	{
 		x = c->getX();
 		y = c->getY();
-		path = c->getPath()+1;
-		if(!c->isInitial())
-		{
-			c->setO();
-		}
-		else
-		{
-			board.getInitial()->setVisited();
-		}
 		if(x-1 >= 0)
 		{
-			Cell* c2 = board.getCell(x-1,y);
-			if(!c2->isObstacle() && !c2->isVisited())
+			Cell* c2 = board->getCell(x-1,y);
+			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->getPath() == c->getPath() - 1)
 			{
-				fringe.insert(search->returnF(path,x-1,y,gx,gy), c2);
-				nodes++;
-				c2->setPath(path);
-				c2->setVisited();
+				c = c2;
 			}
 		}
 		if(y-1 >= 0)
 		{
-			Cell* c2 = board.getCell(x,y-1);
-			if(!c2->isObstacle() && !c2->isVisited())
+			Cell* c2 = board->getCell(x,y-1);
+			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->getPath() == c->getPath() - 1)
 			{
-				fringe.insert(search->returnF(path,x,y-1,gx,gy), c2);
-				nodes++;
-				c2->setPath(path);
-				c2->setVisited();
+				c = c2;
 			}
 		}
 		if(x+1 < dimension)
 		{
-			Cell* c2 = board.getCell(x+1,y);
-			if(!c2->isObstacle() && !c2->isVisited())
+			Cell* c2 = board->getCell(x+1,y);
+			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->getPath() == c->getPath() - 1)
 			{
-				fringe.insert(search->returnF(path,x+1,y,gx,gy), c2);
-				nodes++;
-				c2->setPath(path);
-				c2->setVisited();
+				c = c2;
 			}
 		}
 		if(y+1 < dimension)
 		{
-			Cell* c2 = board.getCell(x,y+1);
-			if(!c2->isObstacle() && !c2->isVisited())
+			Cell* c2 = board->getCell(x,y+1);
+			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->getPath() == c->getPath() - 1)
 			{
-				fringe.insert(search->returnF(path,x,y+1,gx,gy), c2);
-				nodes++;
-				c2->setPath(path);
-				c2->setVisited();
+				c = c2;
 			}
 		}
+		if(c != board->getInitial())
+		{
+			c->setO();
+		}
 	}
-	board.outBoard(out);
-	return -1;
 }
