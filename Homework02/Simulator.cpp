@@ -33,7 +33,7 @@ void Simulator::run()
 		chooseSearch(i, out);
 		if(singleSearch(out) == -1)
 		{
-			out << "\nSolution not found." << endl;
+			out << "Solution not found.\n" << endl;
 		}
 	}
 	out.close();
@@ -50,19 +50,19 @@ void Simulator::chooseSearch(int c, ofstream& out)
 	{
 		case 1:
 			search = new Euclidian();
-			out << "\nEuclidian\n" << endl;
+			out << "Euclidian\n" << endl;
 			break;
 		case 2:
 			search = new Manhattan();
-			out << "\nManhattan\n" << endl;
+			out << "Manhattan\n" << endl;
 			break;
 		case 3:
 			search = new A_Euclidian();
-			out << "\nA* Euclidian\n" << endl;
+			out << "A* Euclidian\n" << endl;
 			break;
 		case 4:
 			search = new A_Manhattan();
-			out << "\nA* Manhattan\n" << endl;
+			out << "A* Manhattan\n" << endl;
 			break;
 	}
 }
@@ -79,20 +79,29 @@ int Simulator::singleSearch(ofstream& out)
 	fringe.insert(0, board.getInitial());
 	board.getInitial()->setVisited();
 	int nodes = 1;
+	int steps = 0;
 	while(!fringe.isEmpty())
 	{
 		Cell* c = fringe.removeFront();
+		c->setStep();
 		if(c == board.getGoal())
 		{
 			outPath(&board);
 			board.outBoard(out);
 			out << "\nPath Cost: " << c->getPath() << endl;
-			out << "Number of Nodes: " << nodes << endl;
+			out << "Number of Steps Taken: " << steps << endl;
+			out << "Number of Nodes Searched: " << nodes << endl << endl;
 			return 0;
 		}
+		if(board.getInitial() != c)
+		{
+			//c->setO();
+			//board.outBoard(out);
+			//out << endl;
+		}
 		nodes += searchNeighbors(c, &board, &fringe);
+		steps++;
 	}
-	board.outBoard(out);
 	return -1;
 }
 
@@ -168,44 +177,46 @@ void Simulator::outPath(Board* board)
 	int x = 0;
 	int y = 0;
 	int dimension = board->getDimension();
-	Cell* c = board->getGoal();
-	while(c != board->getInitial())
+	DLL<Cell*> fringe;
+	fringe.insert(board->getGoal()->getPath(), board->getGoal());
+	Cell* c;
+	while((c = fringe.removeFront())!= board->getInitial())
 	{
 		x = c->getX();
 		y = c->getY();
 		if(x-1 >= 0)
 		{
 			Cell* c2 = board->getCell(x-1,y);
-			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->getPath() == c->getPath() - 1)
+			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->isStep() && c2->getPath() == c->getPath() - 1)
 			{
-				c = c2;
+				fringe.insert(c2->getPath(), c2);
 			}
 		}
 		if(y-1 >= 0)
 		{
 			Cell* c2 = board->getCell(x,y-1);
-			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->getPath() == c->getPath() - 1)
+			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->isStep() && c2->getPath() == c->getPath() - 1)
 			{
-				c = c2;
+				fringe.insert(c2->getPath(), c2);
 			}
 		}
 		if(x+1 < dimension)
 		{
 			Cell* c2 = board->getCell(x+1,y);
-			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->getPath() == c->getPath() - 1)
+			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->isStep() && c2->getPath() == c->getPath() - 1)
 			{
-				c = c2;
+				fringe.insert(c2->getPath(), c2);
 			}
 		}
 		if(y+1 < dimension)
 		{
 			Cell* c2 = board->getCell(x,y+1);
-			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->getPath() == c->getPath() - 1)
+			if((c2 == board->getInitial() || c2->getCharacter() == '.') && c2->isStep() && c2->getPath() == c->getPath() - 1)
 			{
-				c = c2;
+				fringe.insert(c2->getPath(), c2);
 			}
 		}
-		if(c != board->getInitial())
+		if(c != board->getGoal())
 		{
 			c->setO();
 		}

@@ -16,15 +16,12 @@ private:
 public:
 	DLL();
 	~DLL();
-	T& getFront();
 	void insertFront(float key, T data);
 	void insert(float key, T data);
 	void insertBack(float key, T data);
 	T removeFront();
 	void printList();
-	int find(float key);
 	bool isEmpty();
-	unsigned int getSize();
 };
 
 /**
@@ -50,16 +47,6 @@ DLL<T>::~DLL()
 	}
 	delete front;
 	delete back;
-}
-
-/**
-Returns the first node
-@return T& The data of the first node
-*/
-template <class T>
-T& DLL<T>::getFront()
-{
-	return front->data;
 }
 
 /**
@@ -173,21 +160,6 @@ T DLL<T>::removeFront()
 }
 
 /**
-Prints the values of the list
-*/
-template <class T>
-void DLL<T>::printList()
-{
-	ListNode<T> *current = front;
-	while(current != NULL)
-	{
-		cout << current->key << " ";
-		current = current->next;
-	}
-	cout << endl;
-}
-
-/**
 Returns whether the list is empty
 @return bool True if list is empty
 */
@@ -195,15 +167,6 @@ template <class T>
 bool DLL<T>::isEmpty()
 {
 	return (size == 0);
-}
-
-/**
-Returns the size of the list
-*/
-template <class T>
-unsigned int DLL<T>::getSize()
-{
-	return size;
 }
 
 #endif

@@ -16,6 +16,7 @@ private:
 	bool goal;
 	bool obstacle;
 	bool visited;
+	bool step;
 public:
 	Cell();
 	Cell(int i, int j, char c);
@@ -30,6 +31,8 @@ public:
 	bool isVisited();
 	void setVisited();
 	void setO();
+	bool isStep();
+	void setStep();
 };
 
 #endif

@@ -16,6 +16,7 @@ Cell::Cell()
 	initial = false;
 	goal = false;
 	visited = false;
+	step = false;
 }
 
 /**
@@ -34,6 +35,7 @@ Cell::Cell(int i, int j, char c)
 	goal = false;
 	obstacle = false;
 	visited = false;
+	step = false;
 	if(c == 'i')
 	{
 		initial = true;
@@ -46,7 +48,6 @@ Cell::Cell(int i, int j, char c)
 	{
 		obstacle = true;
 	}
-
 }
 
 /**
@@ -144,4 +145,14 @@ Sets a cell to 'o'
 void Cell::setO()
 {
 	character = 'o';
+}
+
+bool Cell::isStep()
+{
+	return step;
+}
+
+void Cell::setStep()
+{
+	step = true;
 }
