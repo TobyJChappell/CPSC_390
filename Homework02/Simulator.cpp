@@ -37,6 +37,7 @@ void Simulator::run()
 		}
 	}
 	out.close();
+	cout << "Searches successful, output located in \"output.txt\"" << endl;
 }
 
 /**
