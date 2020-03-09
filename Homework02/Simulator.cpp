@@ -5,12 +5,13 @@
 using namespace std;
 
 /**
-Creates a board from an input file
+Creates a board from an input file and checks if board is valid
 @param b The name of a valid input file
 */
 Simulator::Simulator(string b)
 {
 	filename = b;
+	Board board(filename);
 }
 
 /**

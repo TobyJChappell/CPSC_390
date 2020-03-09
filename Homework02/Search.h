@@ -7,7 +7,7 @@
 using namespace std;
 
 /**
-GameMode is an astract class so that when once a mode is chosen by the user, Simulator then assigns that mode to this class. Thus, the behavior of Simulator remains unaltered no matter what mode the user selects.
+Search is an astract class so that when once a search is chosen, Simulator will assign that search to this class. Thus, the behavior of Simulator remains unaltered no matter what search the user selects.
 */
 class Search
 {

@@ -16,6 +16,8 @@ Board::Board(string b)
 	int count = 0;
 	int i = 0;
 	int j = 0;
+	initial = new Cell();
+	goal = new Cell();
 	if(getline(file, line))
 	{
 		dimension = checkNum(line);
@@ -46,6 +48,18 @@ Board::Board(string b)
 			}
 			j++;
 		}
+	}
+	if(initial->getX() == -1)
+	{
+		cout << "ERROR: Initial space ('i') must be specified" << endl;
+	}
+	if(goal->getX() == -1)
+	{
+		cout << "ERROR: Goal space ('g') must be specified" << endl;
+	}
+	if(initial->getX() == -1 || goal->getX() == -1)
+	{
+		exit(EXIT_FAILURE);
 	}
 	file.close();
 }
@@ -116,7 +130,7 @@ void Board::outBoard(ofstream& file)
 }
 
 /**
-Checks a line to determine if it is a number
+Checks a line to determine if it is a valid number
 @param s The first line of the file
 @return int The conversion of s into a number
 */
@@ -126,14 +140,14 @@ int Board::checkNum(string s)
 	{
 		if(!isdigit(s[i]))
 		{
-			cerr << "ERROR: Dimensions must be numbers at the top of the file" << endl;
+			cerr << "ERROR: Dimensions must be a number at the top of the file" << endl;
 			exit(EXIT_FAILURE);
 		}
 	}
 	int num = stoi(s);
-	if(num < 1)
+	if(num < 2)
 	{
-		cerr << "ERROR: Dimensions must be greater than 1" << endl;
+		cerr << "ERROR: Dimensions must be greater than or equal to 2" << endl;
 		exit(EXIT_FAILURE);
 	}
 	return num;

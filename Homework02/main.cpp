@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 	test.open(file);
 	while(!test)
 	{
-		cout << "Please enter a valid file file:" << endl;
+		cout << "Please enter a valid file:" << endl;
 		cin >> file;
 		test.open(file);
 	}

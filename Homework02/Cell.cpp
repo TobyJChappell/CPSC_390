@@ -8,8 +8,8 @@ Default cell constructor
 */
 Cell::Cell()
 {
-	x = 0;
-	y = 0;
+	x = -1;
+	y = -1;
 	path = 0;
 	character = ' ';
 	obstacle = false;
@@ -147,11 +147,18 @@ void Cell::setO()
 	character = 'o';
 }
 
+/**
+Returns whether a cell is a step
+@return bool Step
+*/
 bool Cell::isStep()
 {
 	return step;
 }
 
+/**
+Sets step to true
+*/
 void Cell::setStep()
 {
 	step = true;
